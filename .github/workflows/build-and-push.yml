@@ -25,15 +25,12 @@ jobs:
   build-and-push:
     name: build ${{ inputs.microservice }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: set environment variables
         id: vars
@@ -80,13 +77,8 @@ jobs:
           tags: |
             ${{ env.REPO }}:latest
             ${{ env.REPO }}:${{ env.SHORT_SHA }}
-            ${{ steps.check_release.outputs.is_release_merge == 'true' && format('{0}:{1}', env.REPO, steps.check_release.outputs.release_version) || '' }}
 
       - name: Notify about successful build
         if: success()
         run: |
-          if [[ "${{ steps.check_release.outputs.is_release_merge }}" == "true" ]]; then
-            echo "::notice::Successfully built and pushed ${{ inputs.microservice }} release image with tags: latest, ${{ env.SHORT_SHA }}, v${{ steps.check_release.outputs.release_version }}"
-          else
-            echo "::notice::Successfully built and pushed ${{ inputs.microservice }} image with tags: latest, ${{ env.SHORT_SHA }}"
-          fi
+          echo "::notice::Successfully built and pushed ${{ inputs.microservice }} image with tags: latest, ${{ steps.vars.outputs.SHORT_SHA }}"

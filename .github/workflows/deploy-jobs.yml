@@ -1,5 +1,5 @@
-name: deploy microservice
-run-name: deploy ${{ inputs.microservice }}
+name: Deploy Workflow
+run-name: Deploy ${{ inputs.microservice }}
 
 on:
   workflow_call:
@@ -40,11 +40,14 @@ env:
 
 jobs:
   deploy:
-    name: deploy ${{ inputs.microservice }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1  
      
       - name: set environment variables
         id: vars

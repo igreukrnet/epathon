@@ -9,18 +9,6 @@ inputs:
     description: "Docker Hub username"
     required: true
 
-  aws-access-key-id:
-    description: "AWS Access Key ID"
-    required: true
-
-  aws-secret-access-key:
-    description: "AWS Secret Access Key"
-    required: true    
-
-  aws-region:
-    description: "AWS Region"
-    required: true    
-
 runs:
   using: "composite"
   steps:
@@ -103,7 +91,7 @@ runs:
       if: ${{ inputs.microservice == 'dotnet' }}
       shell: bash
       run: |
-        echo "PORT=8080" >> $GITHUB_ENV
+        echo "PORT=80" >> $GITHUB_ENV
         echo "CONTAINER_NAME=dotnet-app" >> $GITHUB_ENV
         echo "INSTANCE_NAME=dotnet" >> $GITHUB_ENV
         echo "CONTEXT=backend/ApiService" >> $GITHUB_ENV
