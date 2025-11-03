@@ -69,7 +69,7 @@ namespace Epam.ItMarathon.ApiService.Api.Extension
             });
 
             #endregion Serialization
-
+ 
             #region Swagger
 
             var textInfo = CultureInfo.CurrentCulture.TextInfo;
