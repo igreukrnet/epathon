@@ -19,4 +19,3 @@
 # Ignore environment-specific files
 .envrc
 .env
-/.vs
