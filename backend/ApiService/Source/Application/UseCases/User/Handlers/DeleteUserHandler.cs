@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Security.Cryptography.X509Certificates;
+using CSharpFunctionalExtensions;
 using Epam.ItMarathon.ApiService.Application.UseCases.User.Queries;
 using Epam.ItMarathon.ApiService.Domain.Abstract;
 using Epam.ItMarathon.ApiService.Domain.Shared.ValidationErrors;
@@ -24,9 +25,22 @@ namespace Epam.ItMarathon.ApiService.Application.UseCases.User.Handlers
             }
             //2. Delete user by id in room's users - room.DeleteUser(request.UserId)
             var room = roomResult.Value;
-            room.DeleteUser(request.UserId);
+            var deleteResult=room.DeleteUser(request.UserId);
+            if (deleteResult.IsFailure)
+            {
+                return deleteResult;
+            }
             
-            //3. Get updated room
+            //3. Update room in repository
+            var updateResult = await roomRepository.UpdateAsync(room, cancellationToken);
+            if (updateResult.IsFailure)
+            {
+                return Result.Failure<RoomAggregate, ValidationResult>(new BadRequestError([ 
+                    new ValidationFailure(string.Empty, updateResult.Error)
+                ]));
+            }
+            
+            //4. Get updated room
             var updatedRoomResult = await roomRepository.GetByUserCodeAsync(request.UserCode, cancellationToken);
             return updatedRoomResult;
 

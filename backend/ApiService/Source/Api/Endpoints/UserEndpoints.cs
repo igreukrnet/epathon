@@ -63,7 +63,7 @@ namespace Epam.ItMarathon.ApiService.Api.Endpoints
                 .WithSummary("Create and add user to a room.")
                 .WithDescription("Return created user info.");
             
-            _ = root.MapDelete("{id:long}", (id, userCode, mediator, mapper, cancellationToken) => DeleteUserWithId(id, userCode, mediator, cancellationToken))
+            _ = root.MapDelete("{id:long}", DeleteUserWithId)
                 .AddEndpointFilterFactory(ValidationFactoryFilter.GetValidationFactory)
                 .Produces(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
