@@ -97,4 +97,16 @@ export class ApiService {
       { params, observe: 'response' }
     );
   }
+
+  public deleteUser(
+    adminUserCode: string,
+    idToDelete: string
+  ): Observable<HttpResponse<void>> {
+    const params = new HttpParams().set('userCode', adminUserCode);
+
+    return this.#http.delete<void>(
+      `${this.#baseUrl}${Endpoint.users}/${idToDelete}`,
+      { params, observe: 'response' }
+    );
+  }
 }
