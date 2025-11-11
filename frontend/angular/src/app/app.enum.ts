@@ -19,6 +19,7 @@ export const enum IconName {
   Close = 'close',
   Link = 'link',
   Info = 'info',
+  Delete = 'delete',
 }
 
 export const enum AriaLabel {
@@ -31,6 +32,7 @@ export const enum AriaLabel {
   Close = 'Close',
   ParticipantLink = 'Copy personal link',
   Info = 'Info',
+  Delete = 'Delete',
 }
 
 export const enum InputSidebarText {
@@ -120,6 +122,7 @@ export enum ToastMessage {
   PleaseCreateYourRoom = 'Please create your room first.',
   PleaseJoinTheRoom = 'Please join the room first',
   SuccessDrawNames = 'Success! All participants are matched.\nLet the gifting magic start!',
+  SuccessDeleteUser = 'User has been successfully removed from the room.',
 }
 
 export const enum InputType {
@@ -253,6 +256,9 @@ export const enum PersonalLink {
   Error = 'Personal Link was not copied. Try again.',
   Info = 'Copy Personal Link',
 }
+export const enum Delete {
+  Info = 'Delete user',
+}
 
 export const enum Endpoint {
   rooms = '/api/rooms',
@@ -292,12 +298,14 @@ export const enum ModalTitle {
   ParticipantDetails = 'Participant Details',
   PersonalInformation = 'Personal Information',
   Invitation = 'Invite New Members',
+  DeleteUser = 'Delete User',
 }
 
 export const enum ModalSubtitle {
   ParticipantInfo = 'Everything about your Secret Nick player!',
   PersonalInfo = 'Secret Nick needs to know where to send your present!',
   Invitation = 'Share the link below with 20 friends to invite them',
+  DeleteUser = 'Remove user from the room',
 }
 
 export const enum PersonalInfoTerm {
