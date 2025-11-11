@@ -6,6 +6,9 @@
 /e2e/test-output/
 /.angular/
 .angular/
+.idea/
+.vscode/
+node_modules/
 
 # Ignore variables files
 .terraform.lock.hcl
