@@ -6,6 +6,9 @@
 /e2e/test-output/
 /.angular/
 .angular/
+.idea/
+.vscode/
+node_modules/
 
 # Ignore variables files
 .terraform.lock.hcl
@@ -37,3 +40,4 @@
 /testautomation/SecretNick.TestAutomation/Tests/bin/Angular_Headless/net9.0/es
 /testautomation/SecretNick.TestAutomation/Tests/bin/Angular_Headless/net9.0/fr
 /testautomation/SecretNick.TestAutomation/Tests/bin/Angular_Headless/net9.0
+/.vs/epathon/v17
