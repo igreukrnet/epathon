@@ -11,6 +11,7 @@ import { tap } from 'rxjs';
 import { IconButton } from '../icon-button/icon-button';
 import {
   AriaLabel,
+  Delete,
   IconName,
   MessageType,
   NavigationLinkSegment,
@@ -25,6 +26,7 @@ import { ModalService } from '../../../core/services/modal';
 import { getPersonalInfo } from '../../../utils/get-personal-info';
 import { UserService } from '../../../room/services/user';
 import type { User } from '../../../app.models';
+import { DeleteUserModal } from '../../../room/components/delete-user-modal/delete-user-modal';
 
 @Component({
   selector: 'li[app-participant-card]',
@@ -58,6 +60,8 @@ export class ParticipantCard {
   public readonly ariaLabelCopy = AriaLabel.ParticipantLink;
   public readonly iconInfo = IconName.Info;
   public readonly ariaLabelInfo = AriaLabel.Info;
+  public readonly iconDelete = IconName.Delete;
+  public readonly ariaLabelDelete = AriaLabel.Delete;
 
   @HostBinding('tabindex') tab = 0;
   @HostBinding('class.list-row') rowClass = true;
@@ -121,6 +125,23 @@ export class ParticipantCard {
     }
   }
 
+  public onDeleteHover(target: EventTarget | null): void {
+    if (target instanceof HTMLElement) {
+      this.#popup.show(
+        target,
+        PopupPosition.Center,
+        { message: Delete.Info, type: MessageType.Info },
+        true
+      );
+    }
+  }
+
+  public onDeleteLeave(target: EventTarget | null): void {
+    if (target instanceof HTMLElement) {
+      this.#popup.hide(target);
+    }
+  }
+
   #openModal(): void {
     const personalInfo = getPersonalInfo(this.participant());
     const roomLink = this.#urlService.getNavigationLinks(
@@ -166,5 +187,37 @@ export class ParticipantCard {
       },
       true
     );
+  }
+
+  public onDeleteClick(): void {
+    const userName = this.fullName();
+
+    this.#modalService.openWithResult(
+      DeleteUserModal,
+      { userName },
+      {
+        closeModal: () => this.#modalService.close(),
+        confirmDelete: () => this.#deleteUser(),
+      }
+    );
+  }
+
+  #deleteUser(): void {
+    const idToDelete = this.participant().id;
+
+    if (!idToDelete) {
+      return;
+    }
+
+    this.#userService
+      .deleteUser(String(idToDelete))
+      .pipe(
+        tap(({ status }) => {
+          if (status === 200) {
+            this.#modalService.close();
+          }
+        })
+      )
+      .subscribe();
   }
 }

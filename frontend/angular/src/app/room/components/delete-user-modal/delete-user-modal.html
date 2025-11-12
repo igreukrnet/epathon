@@ -1,0 +1,23 @@
+<app-common-modal-template
+  [headerPictureName]="pictureName"
+  [headerTitle]="title"
+  [title]="title"
+  [buttonText]="buttonText"
+  [subtitle]="subtitle"
+  (closeModal)="onCloseModal()"
+  (buttonAction)="onCancelClick()"
+>
+  <div class="modal-content">
+    <p class="confirmation-text">
+      Are you sure you want to delete <strong>{{ userName() }}</strong> from the
+      room?
+    </p>
+    <p class="warning-text">This action cannot be undone.</p>
+
+    <div class="button-group">
+      <button type="button" class="btn btn-delete" (click)="onConfirmDelete()">
+        OK
+      </button>
+    </div>
+  </div>
+</app-common-modal-template>
